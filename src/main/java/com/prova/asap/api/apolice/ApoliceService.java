@@ -77,7 +77,6 @@ public class ApoliceService {
     }
 
     public ApoliceConsultaDTO getApolicesByNumero(String numero) {
-        //diferencaDias
         Optional<Apolice> ap = apoliceRepository.findByNumero(numero);
         if (!ap.isPresent()) {
             throw new ObjectNotFoundException("Apólice não encontrada.");
