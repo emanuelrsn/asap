@@ -5,6 +5,7 @@
  */
 package com.prova.asap.api.apolice;
 
+import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
@@ -12,4 +13,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author Santana
  */
 public  interface ApoliceRepository extends MongoRepository<Apolice, Integer> {
+    public Optional<Apolice> findByNumero(String numero);
 }

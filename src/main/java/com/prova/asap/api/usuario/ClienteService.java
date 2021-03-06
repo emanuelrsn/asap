@@ -6,11 +6,10 @@
 package com.prova.asap.api.usuario;
 
 import br.com.prova.asap.api.apolice.util.GenerateSequence;
+import br.com.prova.asap.api.apolice.util.Util;
 import com.prova.asap.api.infra.exception.GenericException;
 import com.prova.asap.api.infra.exception.ObjectNotFoundException;
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
-import static org.springframework.data.mongodb.core.query.Query.query;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,11 +30,20 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
-
+    
+    
+    public void isCpfValido(String cpf){
+        if(!Util.isCPF(cpf)){
+            throw new GenericException("O CPF informado é inválido.");
+        }
+    }
     
 
     public ClienteDTO insert(ClienteDTO clienteDto) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
+        
+        isCpfValido(clienteDto.getCpf());
+        
         Cliente usu = clienteRepository.findByCpf(clienteDto.getCpf()).orElse(null);
         if (Objects.nonNull(usu)) {
             throw new GenericException("Já existe um cliente com este CPF.");
@@ -59,6 +67,8 @@ public class ClienteService {
 
     public ClienteDTO update(Integer id, ClienteDTO clienteDto) {
 
+        isCpfValido(clienteDto.getCpf());
+        
         Optional<Cliente> optional = clienteRepository.findById(id);
         if (!optional.isPresent()) {
             throw new ObjectNotFoundException("Cliente não encontrado.");
@@ -69,10 +79,7 @@ public class ClienteService {
         bd.setCpf(clienteDto.getCpf());
         bd.setNome(clienteDto.getNome());
         bd.setUf(clienteDto.getUf());
-
-        clienteRepository.save(bd);
-
-        return ClienteDTO.create(bd);
+        return ClienteDTO.create(clienteRepository.save(bd));
     }
 
     public ClienteDTO getClientesById(Integer id) {

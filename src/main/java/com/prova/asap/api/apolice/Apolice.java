@@ -41,11 +41,11 @@ public class Apolice implements Serializable {
     @Indexed(unique=true)
     private String numero;
     @NotNull
-    private Date vigencia_inicio;
+    private Date vigenciaInicio;
     @NotNull
-    private Date vigencia_fim;
+    private Date vigenciaFim;
     @NotNull
-    private String placa_veiculo;
+    private String placaVeiculo;
     @NotNull
     private BigDecimal valor;
 

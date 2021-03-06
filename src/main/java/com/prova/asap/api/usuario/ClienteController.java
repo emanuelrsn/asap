@@ -5,7 +5,9 @@
  */
 package com.prova.asap.api.usuario;
 
+import br.com.prova.asap.api.apolice.util.Util;
 import java.net.URI;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  *
@@ -40,17 +41,17 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity post(@RequestBody ClienteDTO cliente) throws ClassNotFoundException, InstantiationException, IllegalAccessException  {
+    public ResponseEntity post(@RequestBody @Valid ClienteDTO cliente) throws ClassNotFoundException, InstantiationException, IllegalAccessException  {
        
         ClienteDTO f = service.insert(cliente);
         
-        URI location = getUri(f.getIdCliente());
+        URI location = Util.getUri(f.getIdCliente(),"id");
         return ResponseEntity.created(location).build() ;
 
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity put(@PathVariable Integer id,@RequestBody ClienteDTO cliente) {
+    public ResponseEntity put(@PathVariable Integer id, @Valid @RequestBody ClienteDTO cliente) {
 
         ClienteDTO f = service.update(id, cliente);
         return ResponseEntity.ok(f);
@@ -64,9 +65,5 @@ public class ClienteController {
         return ResponseEntity.ok().build();
 
     }
-    
-    private URI getUri(Integer id) {
-        return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(id).toUri();
-    }
+
 }

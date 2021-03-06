@@ -5,11 +5,12 @@
  */
 package com.prova.asap.api.apolice;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 
@@ -20,20 +21,25 @@ import org.modelmapper.ModelMapper;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApoliceDTO {
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date vigencia_inicio;
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date vigencia_fim;
-    private String placa_veiculo;
+    
+    @NotNull(message = "A data de inicio da vigigencia é obrigatório.")
+    private Date vigenciaInicio;
+    @NotNull(message = "A data final da vigigencia é obrigatório.")
+    private Date vigenciaFim;
+    @NotBlank(message = "A placa do veiculo é obrigatório.")
+    private String placaVeiculo;
+    @NotNull(message = "O valor é obrigatório.")
     private BigDecimal valor;
+    @NotNull(message = "O código do cliente é obrigatório.")
     private Integer idCliente;
-
-
+    
+    @JsonIgnore
     public static Apolice create(ApoliceDTO apolice) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(apolice, Apolice.class);
     }
 
+    @JsonIgnore
     public static ApoliceDTO create(Apolice apolice) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(apolice, ApoliceDTO.class);

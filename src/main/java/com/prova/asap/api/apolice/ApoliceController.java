@@ -5,8 +5,9 @@
  */
 package com.prova.asap.api.apolice;
 
-import com.prova.asap.api.usuario.*;
+import br.com.prova.asap.api.apolice.util.Util;
 import java.net.URI;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  *
@@ -29,47 +29,43 @@ public class ApoliceController {
 
     @Autowired
     ApoliceService service;
-    
-    
+
     @GetMapping
     public ResponseEntity get() {
         return ResponseEntity.ok(service.getApolices());
     }
-//    
-//    @GetMapping("/{cpf}")
-//    public ResponseEntity getByCpf(@PathVariable String cpf) {
-//        return ResponseEntity.ok(service.getUsuariosByCpf(cpf));
-//    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getApolicesById(id));
+    }
+    
+    @GetMapping("/ApolicePorNumero/{numero}")
+    public ResponseEntity getById(@PathVariable String numero) {
+        return ResponseEntity.ok(service.getApolicesByNumero(numero));
+    }
     @PostMapping
-    public ResponseEntity post(@RequestBody ApoliceDTO apolice) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-       
-        ApoliceDTO f = service.insert(apolice);
-        return ResponseEntity.ok().build();
-        
-//        URI location = getUri(f.getCpf());
-//        return ResponseEntity.created(location).build() ;
+    public ResponseEntity post(@RequestBody @Valid ApoliceDTO apolice) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        ApoliceConsultaDTO f = service.insert(apolice);
+        URI location = Util.getUri(f.getIdApolice(),"id");
+        return ResponseEntity.created(location).build() ;
+
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity put(@PathVariable Integer id,@RequestBody @Valid ApoliceDTO apolice) {
+
+        ApoliceConsultaDTO f = service.update(id, apolice);
+        return ResponseEntity.ok(f);
 
     }
     
-//    @PutMapping("/{cpf}")
-//    public ResponseEntity put(@PathVariable String cpf,@RequestBody UsuarioDTO usuario) {
-//
-//        UsuarioDTO f = service.update(cpf, usuario);
-//        return ResponseEntity.ok(f);
-//
-//    }
-//    
-//    @DeleteMapping("/{cpf}")
-//    public ResponseEntity delete(@PathVariable String cpf) {
-//
-//        service.delete(cpf);
-//        return ResponseEntity.ok().build();
-//
-//    }
-//    
-//    private URI getUri(String cpf) {
-//        return ServletUriComponentsBuilder.fromCurrentRequest().path("/{cpf}")
-//                .buildAndExpand(cpf).toUri();
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Integer id) {
+
+        service.delete(id);
+        return ResponseEntity.ok().build();
+
+    }
 }

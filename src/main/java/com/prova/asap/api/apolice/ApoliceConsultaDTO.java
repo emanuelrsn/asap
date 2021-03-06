@@ -5,7 +5,8 @@
  */
 package com.prova.asap.api.apolice;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.prova.asap.api.apolice.util.Constantes;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.prova.asap.api.usuario.ClienteDTO;
 import java.math.BigDecimal;
@@ -21,14 +22,17 @@ import org.modelmapper.ModelMapper;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApoliceConsultaDTO {
     
-    //@JsonIgnore
-    private Integer numero;
+    private String numero;
     private Integer idApolice;
-    private Date vigencia_inicio;
-    private Date vigencia_fim;
-    private String placa_veiculo;
+    @JsonFormat(pattern=Constantes.DATE_PATTERN)
+    private Date vigenciaInicio;
+    @JsonFormat(pattern=Constantes.DATE_PATTERN)
+    private Date vigenciaFim;
+    private String placaVeiculo;
     private BigDecimal valor;
     private ClienteDTO cliente;
+    private String situacao ;
+    
 
 
     public static Apolice create(ApoliceConsultaDTO apolice) {
