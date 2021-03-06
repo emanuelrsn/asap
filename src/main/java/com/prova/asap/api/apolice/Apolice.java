@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -37,6 +38,7 @@ public class Apolice implements Serializable {
     @NotNull
     private int idApolice;
     @NotNull
+    @Indexed(unique=true)
     private String numero;
     @NotNull
     private Date vigencia_inicio;

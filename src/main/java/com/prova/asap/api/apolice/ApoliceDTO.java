@@ -5,6 +5,7 @@
  */
 package com.prova.asap.api.apolice;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
@@ -19,8 +20,9 @@ import org.modelmapper.ModelMapper;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApoliceDTO {
-    
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date vigencia_inicio;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date vigencia_fim;
     private String placa_veiculo;
     private BigDecimal valor;

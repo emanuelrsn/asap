@@ -5,6 +5,7 @@
  */
 package com.prova.asap.api.usuario;
 
+import br.com.prova.asap.api.apolice.util.GenerateSequence;
 import com.prova.asap.api.infra.exception.GenericException;
 import com.prova.asap.api.infra.exception.ObjectNotFoundException;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -16,7 +17,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,22 +32,22 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public int generateSequence(String seqName) {
-        ClienteSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
-                new Update().inc("seq", 1), options().returnNew(true).upsert(true),
-                ClienteSequence.class);
-        return !Objects.isNull(counter) ? counter.getSeq() : 1;
-    }
+    
 
-    public ClienteDTO insert(ClienteDTO clienteDto) {
+    public ClienteDTO insert(ClienteDTO clienteDto) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
-        Cliente usu = clienteRepository.findById(clienteDto.getIdCliente()).orElse(null);
+        Cliente usu = clienteRepository.findByCpf(clienteDto.getCpf()).orElse(null);
         if (Objects.nonNull(usu)) {
             throw new GenericException("Já existe um cliente com este CPF.");
         }
+        
+        GenerateSequence<ClienteSequence, MongoOperations>
+                seq=new GenerateSequence<>(new ClienteSequence(), mongoOperations);
 
+        Integer idGerado = seq.generateSequence(Cliente.SEQUENCE_NAME);
+        
         Cliente cliente = ClienteDTO.create(clienteDto);
-        cliente.setId(String.valueOf(generateSequence(Cliente.SEQUENCE_NAME)));
+        cliente.setId(String.valueOf(idGerado));
         ClienteDTO clientereturn = ClienteDTO.create(clienteRepository.save(cliente));
         return clientereturn;
 

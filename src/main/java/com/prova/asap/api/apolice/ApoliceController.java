@@ -42,7 +42,7 @@ public class ApoliceController {
 //    }
 
     @PostMapping
-    public ResponseEntity post(@RequestBody ApoliceDTO apolice) {
+    public ResponseEntity post(@RequestBody ApoliceDTO apolice) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
        
         ApoliceDTO f = service.insert(apolice);
         return ResponseEntity.ok().build();

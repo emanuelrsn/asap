@@ -32,6 +32,13 @@ public class ExceptionConfig extends ResponseEntityExceptionHandler {
     public ResponseEntity errorNotFound(Exception ex) {
          return new ResponseEntity<>(new ExceptionError(ex.getMessage()), HttpStatus.NOT_FOUND);  
     }
+    
+    @ExceptionHandler({
+        GenericException.class
+    })
+    public ResponseEntity errorUniqueException(Exception ex) {
+         return new ResponseEntity<>(new ExceptionError(ex.getMessage()), HttpStatus.BAD_REQUEST);  
+    }
 
     @ExceptionHandler({
         IllegalArgumentException.class

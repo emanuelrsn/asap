@@ -5,8 +5,7 @@
  */
 package com.prova.asap.api.apolice;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
+import br.com.prova.asap.api.apolice.interfaces.DataBaseSequence;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -14,12 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author Santana
  */
 @Document(collection = "apolice")
-@Data
-public class ApoliceSequence {
-
-    @Id
-    private String id;
-
-    private int seq;
+public class ApoliceSequence extends DataBaseSequence{
 
 }

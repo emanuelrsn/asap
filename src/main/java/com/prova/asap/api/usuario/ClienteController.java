@@ -40,7 +40,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity post(@RequestBody ClienteDTO cliente) {
+    public ResponseEntity post(@RequestBody ClienteDTO cliente) throws ClassNotFoundException, InstantiationException, IllegalAccessException  {
        
         ClienteDTO f = service.insert(cliente);
         

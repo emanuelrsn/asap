@@ -5,8 +5,7 @@
  */
 package com.prova.asap.api.usuario;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
+import br.com.prova.asap.api.apolice.interfaces.DataBaseSequence;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -14,12 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author Santana
  */
 @Document(collection = "cliente")
-@Data
-public class ClienteSequence {
+public class ClienteSequence extends  DataBaseSequence{
 
-    @Id
-    private String id;
-
-    private int seq;
 
 }

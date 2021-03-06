@@ -5,6 +5,7 @@
  */
 package com.prova.asap.api.apolice;
 
+import br.com.prova.asap.api.apolice.util.GenerateSequence;
 import com.prova.asap.api.usuario.*;
 import java.util.List;
 import java.util.Objects;
@@ -32,20 +33,17 @@ public class ApoliceService {
 
     @Autowired
     private MongoOperations mongoOperations;
+    
 
-    public int generateSequence(String seqName) {
-        ApoliceSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
-                new Update().inc("seq", 1), options().returnNew(true).upsert(true),
-                ApoliceSequence.class);
-        return !Objects.isNull(counter) ? counter.getSeq() : 1;
-    }
-
-    public ApoliceDTO insert(ApoliceDTO apoliceDTO) {
+    public ApoliceDTO insert(ApoliceDTO apoliceDTO) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         ClienteDTO dto = clienteService.getClientesById(apoliceDTO.getIdCliente());
+        GenerateSequence<ApoliceSequence, MongoOperations> seq=new GenerateSequence<>(new ApoliceSequence(), mongoOperations);
+        
+        Integer idGerado = seq.generateSequence(Apolice.SEQUENCE_NAME);
 
         Apolice apolice = ApoliceDTO.create(apoliceDTO);
         apolice.setCliente(ClienteDTO.create(dto));
-        apolice.setId(String.valueOf(generateSequence(Apolice.SEQUENCE_NAME)));
+        apolice.setId(String.valueOf(idGerado));
         ApoliceDTO apolicereturn = ApoliceDTO.create(apoliceRepository.save(apolice));
         return apolicereturn;
 
