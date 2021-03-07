@@ -68,7 +68,7 @@ Ex: C:\data\db
 ```JS 
 "C:\Program Files\MongoDB\Server\4.4\bin\mongod.exe" --dbpath="c:\data\db"
  ```
-* Compile o projeto
+* Compile o projeto na IDE de sua prefrência ou siga direto para a pasta target e execute a ultima versão compilada.
 * Vá a ate a pasta target do projeto
 * Execute o comando:
 ```JS
