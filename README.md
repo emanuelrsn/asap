@@ -8,9 +8,9 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre a prova
 
-Desafio de desenvolvimento Java
-Crie uma API para uma seguradora de veículos.
-Tecnologias que devem ser usadas
+Desafio de desenvolvimento Java<br/>
+Crie uma API para uma seguradora de veículos.<br/>
+Tecnologias que devem ser usadas<br/>
 * Java 8
 * Spring Boot ou Grails (utilizando Gradle)
 * MongoDB 3.4 ou superior
