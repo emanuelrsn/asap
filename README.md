@@ -8,18 +8,41 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre a prova
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Desafio de desenvolvimento Java
+Crie uma API para uma seguradora de veículos.
+Tecnologias que devem ser usadas
+* Java 8
+* Spring Boot ou Grails (utilizando Gradle)
+* MongoDB 3.4 ou superior
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+Cadastro de clientes (CRUD completo)
+- Deve conter:
+* Nome
+* CPF
+* Cidade
+* UF
+Todos os dados são obrigatórios
+CPF deve ser válido e único
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should element DRY principles to the rest of your life :smile:
+Cadastro de apólices (CRUD completo)
+- Deve conter
+* Número
+* Vigência (início e fim)
+* Placa do veículo
+* Valor
+- Todos os dados são obrigatórios
+- Toda apólice deve pertencer a um cliente
+- O número da apólice deve ser gerado aleatoriamente e único
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have have contributed to expanding this template!
+Consultar apólice por número (endpoint separado)
+* Mostrar todos os dados da apólice
+* Informar em campo se a apólice venceu ou não
+* Informar em campo quantos dias para vencer, ou há quantos dias venceu
 
-A list of commonly used resources that I find helpful are listed in the acknowledgements.
+Finalização
+* Publicar arquivo JAR para rodar o projeto no GitHub
+* Documentar endpoints com ferramentas como Postman, Swagger,Insomnia, etc.
+* Publicar no GitHub
 
 ### Built With
 
