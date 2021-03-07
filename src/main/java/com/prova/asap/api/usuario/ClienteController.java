@@ -6,6 +6,7 @@
 package com.prova.asap.api.usuario;
 
 import br.com.prova.asap.api.apolice.util.Util;
+import io.swagger.annotations.ApiOperation;
 import java.net.URI;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +31,19 @@ public class ClienteController {
     @Autowired
     ClienteService service;
 
+    @ApiOperation(value = "Retorna uma lista de cliente")
     @GetMapping
     public ResponseEntity get() {
         return ResponseEntity.ok(service.getClientes());
     }
     
+    @ApiOperation(value = "Retorna uma lista de cliente por ID")
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getClientesById(id));
     }
 
+    @ApiOperation(value = "Incluir um novo cliente")
     @PostMapping
     public ResponseEntity post(@RequestBody @Valid ClienteDTO cliente) throws ClassNotFoundException, InstantiationException, IllegalAccessException  {
        
@@ -50,6 +54,7 @@ public class ClienteController {
 
     }
     
+    @ApiOperation(value = "Alterar um cliente")
     @PutMapping("/{id}")
     public ResponseEntity put(@PathVariable Integer id, @Valid @RequestBody ClienteDTO cliente) {
 
@@ -58,6 +63,7 @@ public class ClienteController {
 
     }
     
+    @ApiOperation(value = "Deletar um cliente")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Integer id) {
 

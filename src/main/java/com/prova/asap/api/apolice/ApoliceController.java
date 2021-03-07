@@ -6,6 +6,7 @@
 package com.prova.asap.api.apolice;
 
 import br.com.prova.asap.api.apolice.util.Util;
+import io.swagger.annotations.ApiOperation;
 import java.net.URI;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,20 +31,25 @@ public class ApoliceController {
     @Autowired
     ApoliceService service;
 
+    @ApiOperation(value = "Retorna uma lista de apólices")
     @GetMapping
     public ResponseEntity get() {
         return ResponseEntity.ok(service.getApolices());
     }
 
+    @ApiOperation(value = "Retorna uma apólice por ID")
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getApolicesById(id));
     }
     
+    @ApiOperation(value = "Retorna uma apólice por Número")
     @GetMapping("/ApolicePorNumero/{numero}")
     public ResponseEntity getById(@PathVariable String numero) {
         return ResponseEntity.ok(service.getApolicesByNumero(numero));
     }
+    
+    @ApiOperation(value = "Incluir uma nova apólice")
     @PostMapping
     public ResponseEntity post(@RequestBody @Valid ApoliceDTO apolice) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
@@ -53,6 +59,7 @@ public class ApoliceController {
 
     }
 
+    @ApiOperation(value = "Alterar uma apólice")
     @PutMapping("/{id}")
     public ResponseEntity put(@PathVariable Integer id,@RequestBody @Valid ApoliceDTO apolice) {
 
@@ -61,6 +68,7 @@ public class ApoliceController {
 
     }
     
+    @ApiOperation(value = "Deletar uma apólice")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Integer id) {
 
