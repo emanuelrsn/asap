@@ -44,51 +44,32 @@ Finalização
 * Documentar endpoints com ferramentas como Postman, Swagger,Insomnia, etc.
 * Publicar no GitHub
 
-### Built With
-
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
-
-
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Começando
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+* Faça checkout deste projeto
+* Abra em uma IDE de sua preferência
+* Execute o maven para baixar as depedências.
 
-### Prerequisites
+### Pre-requisitos
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+MongoBD 4.4 ou superior<br/>
+Java 8 ou Superior
 
-### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+## Como Usar
+
+* Compile o projeto
+* Vá a ate a pasta target do projeto
+* Execute o comando:
+```JS
+  java -jar asap-0.0.1-SNAPSHOT.jar;
    ```
-3. Install NPM packages
-   ```sh
-   npm install
+* Abra o navegador e acesse:
+```JS
+  http://localhost:8080/swagger-ui.html
    ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
