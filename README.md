@@ -60,6 +60,14 @@ Java 8 ou Superior
 
 ## Como Usar
 
+* Crie o diretorio para o banco de dados. 
+```JS 
+Ex: C:\data\db
+ ```
+* Inicie o MongoDB
+```JS 
+"C:\Program Files\MongoDB\Server\4.4\bin\mongod.exe" --dbpath="c:\data\db"
+
 * Compile o projeto
 * Vá a ate a pasta target do projeto
 * Execute o comando:
