@@ -54,13 +54,13 @@ Finalização
 
 ### Pre-requisitos
 
-MongoBD 4.4 ou superior<br/>
+MongoDB 4.4 ou superior<br/>
 Java 8 ou Superior
 
 
 ## Como Usar
 
-* Crie o diretorio para o banco de dados. 
+* Crie o diretório para o banco de dados. 
 ```JS 
 Ex: C:\data\db
  ```
@@ -68,8 +68,8 @@ Ex: C:\data\db
 ```JS 
 "C:\Program Files\MongoDB\Server\4.4\bin\mongod.exe" --dbpath="c:\data\db"
  ```
-* Compile o projeto na IDE de sua prefrência ou siga direto para a pasta target e execute a ultima versão compilada.
-* Vá a ate a pasta target do projeto
+* Compile o projeto na IDE de sua prefrência ou siga direto para a pasta target e execute a última versão compilada.
+* Vá até a pasta target do projeto
 * Execute o comando:
 ```JS
   java -jar asap-0.0.1-SNAPSHOT.jar;
