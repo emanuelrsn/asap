@@ -10,15 +10,12 @@ import br.com.prova.asap.api.apolice.models.Apolice;
 import br.com.prova.asap.api.apolice.repositorys.ApoliceRepository;
 import br.com.prova.asap.api.apolice.dtos.ApoliceDTO;
 import br.com.prova.asap.api.apolice.dtos.ApoliceConsultaDTO;
-import br.com.prova.asap.api.cliente.dtos.ClienteDTO;
 import br.com.prova.asap.api.cliente.services.ClienteService;
 import br.com.prova.asap.api.apolice.util.Util;
 import br.com.prova.asap.api.cliente.models.Cliente;
 import br.com.prova.asap.api.infra.exception.ObjectNotFoundException;
 import java.util.Calendar;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +41,7 @@ public class ApoliceService extends AService<Apolice, ApoliceDTO> {
 
     @Override
     public ApoliceDTO insert(ApoliceDTO apoliceDTO) {
-        Cliente cliente = clienteService.getByIdEntity(apoliceDTO.getIdCliente());
+        Cliente cliente = clienteService.getEntityById(apoliceDTO.getIdCliente());
         Integer idGerado = this.generateSequence();
         Apolice apolice = apoliceDTO.create();
         apolice.setNumero(GerarNumeroProcesso(cliente, idGerado));

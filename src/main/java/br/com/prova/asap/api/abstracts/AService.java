@@ -91,10 +91,6 @@ public abstract class AService<D extends DataBaseSequence, T extends ADTO> {
         try {
             D clazz = (D) this.mongoRepository.findById(id).
                     orElseThrow(() -> new ObjectNotFoundException("Registro não encontrado."));
-
-            if (!this.mongoRepository.findById(id).isPresent()) {
-                throw new ObjectNotFoundException("Registro não encontrado.");
-            }
             return object.create(this.mongoRepository.save(populateDataDtoToEntitiy(clazz, object)));
 
         } catch (Throwable ex) {
@@ -116,7 +112,7 @@ public abstract class AService<D extends DataBaseSequence, T extends ADTO> {
         }
     }
 
-    public D getByIdEntity(Integer id) {
+    public D getEntityById(Integer id) {
         try {
             return (D) this.mongoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Registro não encontrado."));
         } catch (Throwable ex) {

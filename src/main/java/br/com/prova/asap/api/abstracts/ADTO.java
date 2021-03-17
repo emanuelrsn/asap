@@ -22,7 +22,6 @@ public class ADTO<T, D> implements IDTO<T, D> {
     public T create() {
         ModelMapper modelMapper = new ModelMapper();
          modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        //modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return modelMapper.map(this, ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
@@ -30,7 +29,6 @@ public class ADTO<T, D> implements IDTO<T, D> {
     public D create(T o) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        //modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return modelMapper.map(o, (Class<D>) this.getClass());
 
     }
