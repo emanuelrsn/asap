@@ -5,7 +5,7 @@
  */
 package br.com.prova.asap.api.apolice.util;
 
-import br.com.prova.asap.api.apolice.interfaces.DataBaseSequence;
+import br.com.prova.asap.api.interfaces.DataBaseSequence;
 import java.util.Objects;
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 import org.springframework.data.mongodb.core.MongoOperations;
