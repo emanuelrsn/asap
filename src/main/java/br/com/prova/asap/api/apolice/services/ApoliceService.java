@@ -7,6 +7,7 @@ package br.com.prova.asap.api.apolice.services;
 
 import br.com.prova.asap.api.abstracts.AService;
 import br.com.prova.asap.api.apolice.models.Apolice;
+import br.com.prova.asap.api.apolice.models.ApoliceSequence;
 import br.com.prova.asap.api.apolice.repositorys.ApoliceRepository;
 import br.com.prova.asap.api.apolice.dtos.ApoliceDTO;
 import br.com.prova.asap.api.apolice.dtos.ApoliceConsultaDTO;
@@ -24,14 +25,15 @@ import org.springframework.stereotype.Service;
  * @author Santana
  */
 @Service
-public class ApoliceService extends AService<Apolice, ApoliceDTO> {
+public class ApoliceService extends AService<Apolice, ApoliceDTO, ApoliceSequence> {
 
     @Autowired
     private ClienteService clienteService;
 
     @Autowired
-    public ApoliceService(ApoliceRepository apoliceRepository, ApoliceDTO apoliceDTO, Apolice apolice) {
-        super(apoliceRepository, apoliceDTO, apolice);
+    public ApoliceService(ApoliceRepository apoliceRepository, ApoliceDTO apoliceDTO,
+                          Apolice apolice, ApoliceSequence s) {
+        super(apoliceRepository, apoliceDTO, apolice, s);
     }
 
     private String GerarNumeroProcesso(Cliente dto, Integer id) {
@@ -46,7 +48,7 @@ public class ApoliceService extends AService<Apolice, ApoliceDTO> {
         Apolice apolice = apoliceDTO.create();
         apolice.setNumero(GerarNumeroProcesso(cliente, idGerado));
         apolice.setCliente(cliente);
-        apolice.setIdSequence(String.valueOf(idGerado));
+        //apolice.setIdSequence(String.valueOf(idGerado));
         return super.insert(apolice);
     }
 

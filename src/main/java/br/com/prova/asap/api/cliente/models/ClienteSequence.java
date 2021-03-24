@@ -5,15 +5,21 @@
  */
 package br.com.prova.asap.api.cliente.models;
 
-import br.com.prova.asap.api.interfaces.DataBaseSequence;
+import br.com.prova.asap.api.abstracts.ADataBaseSequence;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Santana
  */
 @Document(collection = "cliente")
-public class ClienteSequence extends  DataBaseSequence{
+@Service
+public class ClienteSequence extends ADataBaseSequence {
+
+    public ClienteSequence(){
+        SEQUENCE_NAME = "cliente_sequence";
+    }
 
 
 }

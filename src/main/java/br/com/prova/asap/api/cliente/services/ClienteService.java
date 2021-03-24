@@ -7,6 +7,7 @@ package br.com.prova.asap.api.cliente.services;
 
 import br.com.prova.asap.api.abstracts.AService;
 import br.com.prova.asap.api.cliente.models.Cliente;
+import br.com.prova.asap.api.cliente.models.ClienteSequence;
 import br.com.prova.asap.api.cliente.repositorys.ClienteRepository;
 import br.com.prova.asap.api.cliente.dtos.ClienteDTO;
 import br.com.prova.asap.api.apolice.util.Util;
@@ -21,28 +22,20 @@ import org.springframework.stereotype.Service;
  * @author Santana
  */
 @Service
-public class ClienteService extends AService<Cliente, ClienteDTO> {
+public class ClienteService extends AService<Cliente, ClienteDTO, ClienteSequence> {
 
     @Autowired
     private ClienteRepository clienteRepository;
 
     @Autowired
-    public ClienteService(ClienteRepository mongoRepository, ClienteDTO t, Cliente d) {
-        super(mongoRepository, t, d);
+    public ClienteService(ClienteRepository mongoRepository, ClienteDTO t, Cliente d, ClienteSequence s) {
+        super(mongoRepository, t, d, s);
     }
 
     public void isCpfValido(String cpf) {
         if (!Util.isCPF(cpf)) {
             throw new GenericException("O CPF informado é inválido.");
         }
-    }
-
-    @Override
-    public ClienteDTO insert(ClienteDTO clienteDto) {
-        Integer idGerado = this.generateSequence();
-        Cliente cliente = clienteDto.create();
-        cliente.setIdSequence(String.valueOf(idGerado));
-        return super.insert(clienteDto);
     }
 
     @Override
@@ -54,39 +47,6 @@ public class ClienteService extends AService<Cliente, ClienteDTO> {
         }
     }
 
-//    public void delete(Integer id) {
-//        clienteRepository.deleteById(id);
-//    }
-//    public ClienteDTO update(Integer id, ClienteDTO clienteDto) {
-//
-//        isCpfValido(clienteDto.getCpf());
-//        
-//        Optional<Cliente> optional = clienteRepository.findById(id);
-//        if (!optional.isPresent()) {
-//            throw new ObjectNotFoundException("Cliente não encontrado.");
-//        }
-//        Cliente bd = optional.get();
-//
-//        bd.setCidade(clienteDto.getCidade());
-//        bd.setCpf(clienteDto.getCpf());
-//        bd.setNome(clienteDto.getNome());
-//        bd.setUf(clienteDto.getUf());
-//        return ClienteDTO.create(clienteRepository.save(bd));
-//    }
-//    public ClienteDTO getClientesById(Integer id) {
-//        return clienteRepository.findById(id).map(ClienteDTO::create)
-//                .orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado."));
-//
-//    }
-//    public List<ClienteDTO> getClientes() {
-//        
-//        List<ClienteDTO> lista = clienteRepository.findAll().stream()
-//                .map(f -> ClienteDTO.create(f)).collect(Collectors.toList());
-//        if(!lista.isEmpty()){
-//            lista.remove(0);
-//        }
-//        return lista;
-//    }
     @Override
     public void validationsBeforeUpdate(ClienteDTO t) {
     }

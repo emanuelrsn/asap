@@ -5,7 +5,7 @@
  */
 package br.com.prova.asap.api.apolice.util;
 
-import br.com.prova.asap.api.interfaces.DataBaseSequence;
+import br.com.prova.asap.api.abstracts.ADataBaseSequence;
 import java.util.Objects;
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -19,7 +19,7 @@ import org.springframework.data.mongodb.core.query.Update;
  * @param <T>
  * @param <mongoOperations>
  */
-public class GenerateSequence<T extends DataBaseSequence, mongoOperations extends MongoOperations> {
+public class GenerateSequence<T extends ADataBaseSequence, mongoOperations extends MongoOperations> {
     private final T t;
     private final MongoOperations mongoOperations;
     
@@ -29,7 +29,7 @@ public class GenerateSequence<T extends DataBaseSequence, mongoOperations extend
     }
     
     public int generateSequence(String seqName) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-        DataBaseSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
+        ADataBaseSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
                 new Update().inc("seq", 1), options().returnNew(true).upsert(true),
                 t.getClass());
         return !Objects.isNull(counter) ? counter.getSeq() : 1;

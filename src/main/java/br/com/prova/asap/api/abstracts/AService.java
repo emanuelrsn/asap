@@ -7,7 +7,7 @@ package br.com.prova.asap.api.abstracts;
 
 import br.com.prova.asap.api.infra.exception.GenericException;
 import br.com.prova.asap.api.infra.exception.ObjectNotFoundException;
-import br.com.prova.asap.api.interfaces.DataBaseSequence;
+
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +26,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @param <D>
  * @param <T>
  */
-public abstract class AService<D extends DataBaseSequence, T extends ADTO> {
+public abstract class AService<D extends AEntity, T extends ADTO, S extends ADataBaseSequence> {
 
     public final MongoRepository mongoRepository;
 
@@ -35,18 +35,21 @@ public abstract class AService<D extends DataBaseSequence, T extends ADTO> {
 
     private final T t;
     private final D d;
+    private final S s;
 
-    public AService(MongoRepository mongoRepository, T t, D d) {
+
+    public AService(MongoRepository mongoRepository, T t, D d, S s) {
         this.mongoRepository = mongoRepository;
         this.t = t;
         this.d = d;
+        this.s = s;
     }
 
     public int generateSequence() {
         try {
-            DataBaseSequence counter = this.mongoOperations.findAndModify(query(where("_id").is(this.d.SEQUENCE_NAME)),
+            ADataBaseSequence counter = this.mongoOperations.findAndModify(query(where("_id").is(this.s.SEQUENCE_NAME)),
                     new Update().inc("seq", 1), options().returnNew(true).upsert(true),
-                    d.getClass());
+                    s.getClass());
             return !Objects.isNull(counter) ? counter.getSeq() : 1;
         } catch (Exception ex) {
             throw new GenericException("Não foi possível concluir a operação");
@@ -55,11 +58,14 @@ public abstract class AService<D extends DataBaseSequence, T extends ADTO> {
 
     public T insert(T object) {
         this.validationsBeforeInsert(object);
-        return (T) object.create(this.mongoRepository.save(object.create()));
+        D entity = (D) object.create();
+        entity.setId(generateSequence());
+        return (T) object.create(this.mongoRepository.save(entity));
     }
 
     public T insert(D object) {
         this.validationsBeforeInsert((T) t.create(object));
+        object.setId(generateSequence());
         return (T) t.create(this.mongoRepository.save(object));
     }
 

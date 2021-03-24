@@ -5,6 +5,7 @@
  */
 package br.com.prova.asap.api.apolice.models;
 
+import br.com.prova.asap.api.abstracts.AEntity;
 import br.com.prova.asap.api.cliente.models.Cliente;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -26,12 +28,11 @@ import org.springframework.stereotype.Service;
 @Data
 @AllArgsConstructor
 @Service
-public class Apolice extends ApoliceSequence implements Serializable {
+public class Apolice extends AEntity implements Serializable {
 
-    
+    @Transient
+    public static final String SEQUENCE_NAME = "apolice_sequence";
 
-    @NotNull
-    private int idApolice;
     @NotNull
     @Indexed(unique = true)
     private String numero;
@@ -47,13 +48,8 @@ public class Apolice extends ApoliceSequence implements Serializable {
     @DBRef(lazy = true)
     private Cliente cliente;
 
-    public Apolice() {
-        SEQUENCE_NAME  = "apolice_sequence";
-    }
 
-    public void setIdSequence(String id) {
-        setId(id);
-        this.idApolice = Integer.parseInt(id);
-    }
+    public Apolice(){
 
+    }
 }

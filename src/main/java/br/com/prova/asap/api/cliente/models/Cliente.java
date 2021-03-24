@@ -5,13 +5,14 @@
  */
 package br.com.prova.asap.api.cliente.models;
 
-import br.com.prova.asap.api.apolice.models.ApoliceSequence;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.prova.asap.api.abstracts.AEntity;
+
 import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,8 @@ import org.springframework.stereotype.Service;
 @Data
 @AllArgsConstructor
 @Service
-public class Cliente extends ClienteSequence implements Serializable {
+public class Cliente extends AEntity implements Serializable {
 
-    
-    @NotNull
-    private Integer idCliente;
     @NotNull
     @Indexed(unique=true)
     private String cpf;
@@ -39,13 +37,10 @@ public class Cliente extends ClienteSequence implements Serializable {
     @NotNull
     private String uf;
 
-    public Cliente() {
-        SEQUENCE_NAME = "cliente_sequence";
+    public Cliente(){
+
     }
 
-    public void setIdSequence(String id) {
-        setId(id);
-        this.idCliente = Integer.parseInt(id);
-    }
+
 
 }
