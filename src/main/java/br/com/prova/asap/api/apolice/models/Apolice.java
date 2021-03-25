@@ -5,11 +5,13 @@
  */
 package br.com.prova.asap.api.apolice.models;
 
-import br.com.prova.asap.api.abstracts.AEntity;
+import br.com.prova.asap.api.abstracts.AModel;
 import br.com.prova.asap.api.cliente.models.Cliente;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +30,7 @@ import org.springframework.stereotype.Service;
 @Data
 @AllArgsConstructor
 @Service
-public class Apolice extends AEntity implements Serializable {
+public class Apolice extends AModel implements Serializable {
 
     @Transient
     public static final String SEQUENCE_NAME = "apolice_sequence";
@@ -48,8 +50,15 @@ public class Apolice extends AEntity implements Serializable {
     @DBRef(lazy = true)
     private Cliente cliente;
 
+    public String  getNumero(){
+        if(this.getId()!=0 && Objects.isNull(this.numero)) {
+            int ano = Calendar.getInstance().get(Calendar.YEAR);
+            this.numero = ano + cliente.getCpf().substring(0, 3) + String.format("%010d", this.getId());
+        }
+        return this.numero;
+
+    }
 
     public Apolice(){
-
     }
 }

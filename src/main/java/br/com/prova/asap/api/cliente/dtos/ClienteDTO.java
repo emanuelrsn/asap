@@ -10,6 +10,8 @@ import br.com.prova.asap.api.cliente.models.Cliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.validation.constraints.NotBlank;
+
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +23,9 @@ import org.springframework.stereotype.Service;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Service
 public class ClienteDTO extends ADTO<Cliente,ClienteDTO> {
-    
-    @JsonIgnore
-    private int idCliente;
+
+    @ApiModelProperty(position = 1, required = false, hidden=true)
+    private int id;
     @NotBlank(message = "O nome é obrigatório.")
     private String nome;
     @NotBlank(message = "O CPF é obrigatório.")
@@ -32,6 +34,7 @@ public class ClienteDTO extends ADTO<Cliente,ClienteDTO> {
     private String cidade;
     @NotBlank(message = "A UF é obrigatório.")
     private String uf;
+
 
   
 }

@@ -51,7 +51,7 @@ public class ClienteController {
        
         ClienteDTO f = service.insert(cliente);
         
-        URI location = Util.getUri(f.getIdCliente(),"id");
+        URI location = Util.getUri(f.getId(),"id");
         return ResponseEntity.created(location).build() ;
 
     }

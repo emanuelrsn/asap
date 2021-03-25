@@ -54,10 +54,10 @@ public class ApoliceController {
 
     @ApiOperation(value = "Incluir uma nova apólice")
     @PostMapping
-    public ResponseEntity post(@RequestBody ApoliceDTO apolice) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public ResponseEntity post(@RequestBody @Valid ApoliceDTO apolice){
 
         ApoliceDTO f = service.insert(apolice);
-        URI location = Util.getUri(f.getIdApolice(), "id");
+        URI location = Util.getUri(f.getId(), "id");
         return ResponseEntity.created(location).build();
 
     }

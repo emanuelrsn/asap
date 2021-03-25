@@ -26,7 +26,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @param <D>
  * @param <T>
  */
-public abstract class AService<D extends AEntity, T extends ADTO, S extends ADataBaseSequence> {
+public abstract class AService<D extends AModel, T extends ADTO, S extends ADataBaseSequence> {
 
     public final MongoRepository mongoRepository;
 

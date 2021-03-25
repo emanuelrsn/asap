@@ -36,19 +36,12 @@ public class ApoliceService extends AService<Apolice, ApoliceDTO, ApoliceSequenc
         super(apoliceRepository, apoliceDTO, apolice, s);
     }
 
-    private String GerarNumeroProcesso(Cliente dto, Integer id) {
-        int ano = Calendar.getInstance().get(Calendar.YEAR);
-        return ano + dto.getCpf().substring(0, 3) + String.format("%010d", id);
-    }
 
     @Override
     public ApoliceDTO insert(ApoliceDTO apoliceDTO) {
         Cliente cliente = clienteService.getEntityById(apoliceDTO.getIdCliente());
-        Integer idGerado = this.generateSequence();
         Apolice apolice = apoliceDTO.create();
-        apolice.setNumero(GerarNumeroProcesso(cliente, idGerado));
         apolice.setCliente(cliente);
-        //apolice.setIdSequence(String.valueOf(idGerado));
         return super.insert(apolice);
     }
 

@@ -5,11 +5,11 @@
  */
 package br.com.prova.asap.api.cliente.models;
 
-import br.com.prova.asap.api.abstracts.AEntity;
 
 import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
+import br.com.prova.asap.api.abstracts.AModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Transient;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 @Data
 @AllArgsConstructor
 @Service
-public class Cliente extends AEntity implements Serializable {
+public class Cliente extends AModel implements Serializable {
 
     @NotNull
     @Indexed(unique=true)

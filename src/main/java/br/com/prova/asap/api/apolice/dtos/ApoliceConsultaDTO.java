@@ -21,9 +21,9 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApoliceConsultaDTO extends ADTO<Apolice, ApoliceConsultaDTO>{
-    
+
+    private Integer id;
     private String numero;
-    private Integer idApolice;
     @JsonFormat(pattern=Constantes.DATE_PATTERN)
     private Date vigenciaInicio;
     @JsonFormat(pattern=Constantes.DATE_PATTERN)
