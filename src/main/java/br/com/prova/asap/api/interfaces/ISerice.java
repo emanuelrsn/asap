@@ -13,7 +13,6 @@ public interface ISerice <D extends AModel, T extends ADTO, S extends ADataBaseS
 
     T insert(T object);
 
-    @Transactional
     T insert(D object) ;
 
     Object update(Integer id, ADTO object) ;

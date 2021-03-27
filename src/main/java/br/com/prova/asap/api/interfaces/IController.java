@@ -9,22 +9,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 public interface IController  <Service extends AService, Dto extends ADTO>{
-    @ApiOperation(value = "Retorna uma lista")
-    @GetMapping
+
     public ResponseEntity find() ;
 
-    @ApiOperation(value = "Retorna um registro por ID")
-    @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable Integer id) ;
 
-    @ApiOperation(value = "Incluir um novo regitro")
-    public ResponseEntity post(@RequestBody @Valid ADTO dto);
+    public ResponseEntity findById(Integer id) ;
 
-    @ApiOperation(value = "Alterar um registro")
-    @PutMapping("/{id}")
-    public ResponseEntity put(@PathVariable Integer id, @RequestBody ADTO dto) ;
 
-    @ApiOperation(value = "Deletar uma registro")
-    @DeleteMapping("/{id}")
-    public ResponseEntity remove(@PathVariable Integer id) ;
+    public ResponseEntity post(Dto dto);
+
+    public ResponseEntity put(Integer id, Dto object);
+
+
+    public ResponseEntity remove(Integer id) ;
 }

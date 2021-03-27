@@ -5,6 +5,7 @@
  */
 package br.com.prova.asap.api.cliente.controllers;
 
+import br.com.prova.asap.api.abstracts.AController;
 import br.com.prova.asap.api.cliente.dtos.ClienteDTO;
 import br.com.prova.asap.api.util.Util;
 import br.com.prova.asap.api.cliente.services.ClienteService;
@@ -30,48 +31,41 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/cliente")
 @Api(value = "/api/v1/cliente", description = "Operações do Cliente", consumes="application/json")
-public class ClienteController {
+public class ClienteController  extends AController<ClienteService, ClienteDTO>  {
 
     @Autowired
-    ClienteService service;
+    public ClienteController(ClienteService service, ClienteDTO clienteDTO){
+        super(service, clienteDTO);
+    }
 
     @ApiOperation(value = "Retorna uma lista de cliente")
-    @GetMapping
-    public ResponseEntity get() {
-        return ResponseEntity.ok(service.getAll());
+    @Override
+    public ResponseEntity find() {
+        return super.find();
     }
     
     @ApiOperation(value = "Retorna uma lista de cliente por ID")
-    @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getById(id));
+    @Override
+    public ResponseEntity findById(@PathVariable Integer id) {
+        return super.findById(id);
     }
 
     @ApiOperation(value = "Incluir um novo cliente")
-    @PostMapping
-    public ResponseEntity post(@RequestBody @Valid ClienteDTO cliente) throws ClassNotFoundException, InstantiationException, IllegalAccessException  {
-       
-        ClienteDTO f = service.insert(cliente);
-        
-        URI location = Util.getUri(Integer.parseInt(f.getId()),"id");
-        return ResponseEntity.created(location).build() ;
-
+    @Override
+    public ResponseEntity post(@RequestBody @Valid ClienteDTO cliente) {
+        return super.post(cliente);
     }
     
     @ApiOperation(value = "Alterar um cliente")
-    @PutMapping("/{id}")
+    @Override
     public ResponseEntity put(@PathVariable Integer id, @Valid @RequestBody ClienteDTO cliente) {
-
         return ResponseEntity.ok(service.update(id, cliente));
-
     }
     
     @ApiOperation(value = "Deletar um cliente")
-    @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) {
-
-        service.delete(id);
-        return ResponseEntity.ok().build();
+    @Override
+    public ResponseEntity remove(@PathVariable Integer id) {
+        return super.remove(id);
 
     }
 

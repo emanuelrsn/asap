@@ -9,6 +9,7 @@ import br.com.prova.asap.api.infra.exception.GenericException;
 import br.com.prova.asap.api.infra.exception.ObjectNotFoundException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -70,7 +71,6 @@ public abstract class AService<D extends AModel, T extends ADTO, S extends AData
         return (T) object.create(this.mongoRepository.save(entity));
     }
 
-    @Transactional
     public T insert(D object) {
         this.validationsBeforeInsert((T) t.create(object));
         object.setId(generateSequence());
@@ -141,7 +141,6 @@ public abstract class AService<D extends AModel, T extends ADTO, S extends AData
         return  (List<T>)listFilter;
     }
 
-    @Override
     public abstract void validationsBeforeInsert(T t);
 
     public abstract void validationsBeforeUpdate(T t);
