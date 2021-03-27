@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -27,9 +26,8 @@ import org.springframework.stereotype.Service;
  * @author Santana
  */
 @Document(collection = "apolice")
-@Data
-@AllArgsConstructor
 @Service
+@Data
 public class Apolice extends AModel implements Serializable {
 
     @Transient
@@ -50,15 +48,21 @@ public class Apolice extends AModel implements Serializable {
     @DBRef(lazy = true)
     private Cliente cliente;
 
-    public String  getNumero(){
-        if(this.getId()!=0 && Objects.isNull(this.numero)) {
-            int ano = Calendar.getInstance().get(Calendar.YEAR);
-            this.numero = ano + cliente.getCpf().substring(0, 3) + String.format("%010d", this.getId());
-        }
-        return this.numero;
-
+    public Apolice(){
     }
 
-    public Apolice(){
+    public void setId(String id){
+        this.id=id;
+        getNumero();
+    }
+
+    public String  getNumero(){
+
+        if(Objects.nonNull(this.getId()) && Objects.isNull(this.numero) && Objects.nonNull(cliente)) {
+            Integer ano=null;
+            ano = Calendar.getInstance().get(Calendar.YEAR);
+            this.numero = ano + cliente.getCpf().substring(0, 3) + String.format("%010d", Integer.parseInt(this.getId()));
+        }
+        return this.numero;
     }
 }

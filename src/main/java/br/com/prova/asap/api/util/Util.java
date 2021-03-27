@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.prova.asap.api.apolice.util;
+package br.com.prova.asap.api.util;
 
 import java.net.URI;
 
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.concurrent.TimeUnit;
+
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**

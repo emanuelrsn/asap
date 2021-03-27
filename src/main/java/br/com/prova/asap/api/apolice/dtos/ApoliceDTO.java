@@ -7,15 +7,13 @@ package br.com.prova.asap.api.apolice.dtos;
 
 import br.com.prova.asap.api.abstracts.ADTO;
 import br.com.prova.asap.api.apolice.models.Apolice;
-import br.com.prova.asap.api.cliente.dtos.ClienteDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +24,9 @@ import org.springframework.stereotype.Service;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Service
-public class ApoliceDTO extends ADTO<Apolice,ApoliceDTO>{
+public class ApoliceDTO extends ADTO<Apolice,ApoliceDTO>  {
 
-    @JsonIgnore
-    private Integer id;
+
     @NotNull(message = "A data de inicio da vigigencia é obrigatório.")
     private Date vigenciaInicio;
     @NotNull(message = "A data final da vigigencia é obrigatório.")
@@ -40,6 +37,8 @@ public class ApoliceDTO extends ADTO<Apolice,ApoliceDTO>{
     private BigDecimal valor;
     @NotNull(message = "O código do cliente é obrigatório.")
     private Integer idCliente;
+    @ApiModelProperty(position = 1, required = false, hidden=true)
+    private String numero;
 
 
 }

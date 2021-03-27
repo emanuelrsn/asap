@@ -12,10 +12,8 @@ import br.com.prova.asap.api.apolice.repositorys.ApoliceRepository;
 import br.com.prova.asap.api.apolice.dtos.ApoliceDTO;
 import br.com.prova.asap.api.apolice.dtos.ApoliceConsultaDTO;
 import br.com.prova.asap.api.cliente.services.ClienteService;
-import br.com.prova.asap.api.apolice.util.Util;
 import br.com.prova.asap.api.cliente.models.Cliente;
 import br.com.prova.asap.api.infra.exception.ObjectNotFoundException;
-import java.util.Calendar;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,18 +43,13 @@ public class ApoliceService extends AService<Apolice, ApoliceDTO, ApoliceSequenc
         return super.insert(apolice);
     }
 
-    public ApoliceConsultaDTO getApolicesByNumero(String numero) {
+    public ApoliceConsultaDTO getApoliceByNumero(String numero) {
         Optional<Apolice> ap = ((ApoliceRepository) this.mongoRepository).findByNumero(numero);
         if (!ap.isPresent()) {
             throw new ObjectNotFoundException("Apólice não encontrada.");
         }
-        ApoliceConsultaDTO apoDto = new ApoliceConsultaDTO().create(ap.get());
-
-        Long dias = Util.diferencaDias(apoDto.getVigenciaFim());
-
-        apoDto.setSituacao((dias < 0 ? "Vencida a: " + dias * -1 : "Prazo a vencer: " + dias) + " dia(s)");
-
-        return apoDto;
+        ApoliceDTO apoDto = new ApoliceConsultaDTO().create(ap.get());
+        return ((ApoliceConsultaDTO)apoDto);
 
     }
 

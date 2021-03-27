@@ -6,9 +6,8 @@
 package br.com.prova.asap.api.apolice.controllers;
 
 import br.com.prova.asap.api.apolice.dtos.ApoliceDTO;
-import br.com.prova.asap.api.apolice.dtos.ApoliceConsultaDTO;
 import br.com.prova.asap.api.apolice.services.ApoliceService;
-import br.com.prova.asap.api.apolice.util.Util;
+import br.com.prova.asap.api.util.Util;
 import io.swagger.annotations.ApiOperation;
 import java.net.URI;
 import javax.validation.Valid;
@@ -49,7 +48,7 @@ public class ApoliceController {
     @ApiOperation(value = "Retorna uma apólice por Número")
     @GetMapping("/ApolicePorNumero/{numero}")
     public ResponseEntity getById(@PathVariable String numero) {
-        return ResponseEntity.ok(service.getApolicesByNumero(numero));
+        return ResponseEntity.ok(service.getApoliceByNumero(numero));
     }
 
     @ApiOperation(value = "Incluir uma nova apólice")
@@ -57,7 +56,7 @@ public class ApoliceController {
     public ResponseEntity post(@RequestBody @Valid ApoliceDTO apolice){
 
         ApoliceDTO f = service.insert(apolice);
-        URI location = Util.getUri(f.getId(), "id");
+        URI location = Util.getUri(Integer.parseInt(f.getId()), "id");
         return ResponseEntity.created(location).build();
 
     }

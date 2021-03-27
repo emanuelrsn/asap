@@ -10,7 +10,7 @@ import br.com.prova.asap.api.cliente.models.Cliente;
 import br.com.prova.asap.api.cliente.models.ClienteSequence;
 import br.com.prova.asap.api.cliente.repositorys.ClienteRepository;
 import br.com.prova.asap.api.cliente.dtos.ClienteDTO;
-import br.com.prova.asap.api.apolice.util.Util;
+import br.com.prova.asap.api.util.Util;
 import br.com.prova.asap.api.infra.exception.GenericException;
 
 import java.util.Objects;
@@ -32,15 +32,8 @@ public class ClienteService extends AService<Cliente, ClienteDTO, ClienteSequenc
         super(mongoRepository, t, d, s);
     }
 
-    public void isCpfValido(String cpf) {
-        if (!Util.isCPF(cpf)) {
-            throw new GenericException("O CPF informado é inválido.");
-        }
-    }
-
     @Override
     public void validationsBeforeInsert(ClienteDTO cliente) {
-        isCpfValido(cliente.getCpf());
         Cliente usu = clienteRepository.findByCpf(cliente.getCpf()).orElse(null);
         if (Objects.nonNull(usu)) {
             throw new GenericException("Já existe um cliente com este CPF.");

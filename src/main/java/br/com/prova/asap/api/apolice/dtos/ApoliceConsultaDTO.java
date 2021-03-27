@@ -5,14 +5,9 @@
  */
 package br.com.prova.asap.api.apolice.dtos;
 
-import br.com.prova.asap.api.abstracts.ADTO;
-import br.com.prova.asap.api.apolice.models.Apolice;
-import br.com.prova.asap.api.apolice.util.Constantes;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import br.com.prova.asap.api.util.Util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import br.com.prova.asap.api.cliente.dtos.ClienteDTO;
-import java.math.BigDecimal;
-import java.util.Date;
 import lombok.Data;
 /**
  *
@@ -20,19 +15,15 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApoliceConsultaDTO extends ADTO<Apolice, ApoliceConsultaDTO>{
+public class ApoliceConsultaDTO extends ApoliceDTO {
 
-    private Integer id;
     private String numero;
-    @JsonFormat(pattern=Constantes.DATE_PATTERN)
-    private Date vigenciaInicio;
-    @JsonFormat(pattern=Constantes.DATE_PATTERN)
-    private Date vigenciaFim;
-    private String placaVeiculo;
-    private BigDecimal valor;
-    private ClienteDTO cliente;
     private String situacao ;
-    
+    private ClienteDTO cliente;
 
+    public String getSituacao(){
+        Long dias = Util.diferencaDias(this.getVigenciaFim());
+        return dias<0 ? "Apólice vencida há: " + (dias*-1) + " dias" : "Apólice válida por: "+dias+" dias";
+    }
 
 }

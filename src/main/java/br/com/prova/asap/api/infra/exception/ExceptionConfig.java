@@ -6,10 +6,12 @@
 package br.com.prova.asap.api.infra.exception;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.MappingException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -65,7 +67,11 @@ public class ExceptionConfig extends ResponseEntityExceptionHandler {
     })
     public ResponseEntity errorUniqueException(Exception ex) {
         List<String> listaErro = new ArrayList<>();
-        listaErro.add(ex.getMessage());
+        if(ex instanceof MappingException){
+            listaErro.add(((InvocationTargetException)ex.getCause().getCause()).getTargetException().getMessage());
+        } else {
+            listaErro.add(ex.getMessage());
+        }
         return new ResponseEntity<>(new ExceptionError(listaErro), HttpStatus.BAD_REQUEST);
     }
 

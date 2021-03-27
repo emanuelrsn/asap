@@ -10,6 +10,8 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
 import br.com.prova.asap.api.abstracts.AModel;
+import br.com.prova.asap.api.infra.exception.GenericException;
+import br.com.prova.asap.api.util.Util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Transient;
@@ -39,6 +41,14 @@ public class Cliente extends AModel implements Serializable {
 
     public Cliente(){
 
+    }
+
+    public void setCpf(String cpf){
+        if (!Util.isCPF(cpf)) {
+            throw new GenericException("O CPF informado é inválido.");
+        } else {
+            this.cpf = cpf;
+        }
     }
 
 

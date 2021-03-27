@@ -7,6 +7,8 @@ package br.com.prova.asap.api.cliente.dtos;
 
 import br.com.prova.asap.api.abstracts.ADTO;
 import br.com.prova.asap.api.cliente.models.Cliente;
+import br.com.prova.asap.api.infra.exception.GenericException;
+import br.com.prova.asap.api.util.Util;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.validation.constraints.NotBlank;
@@ -24,8 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteDTO extends ADTO<Cliente,ClienteDTO> {
 
-    @ApiModelProperty(position = 1, required = false, hidden=true)
-    private int id;
+
     @NotBlank(message = "O nome é obrigatório.")
     private String nome;
     @NotBlank(message = "O CPF é obrigatório.")
@@ -34,7 +35,5 @@ public class ClienteDTO extends ADTO<Cliente,ClienteDTO> {
     private String cidade;
     @NotBlank(message = "A UF é obrigatório.")
     private String uf;
-
-
   
 }

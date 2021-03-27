@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
 public abstract class AModel {
     @Id
     @Field("_id")
-    private int id;
+    protected String id;
 }

@@ -12,13 +12,19 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import br.com.prova.asap.api.interfaces.ISerice;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 import org.springframework.data.mongodb.core.MongoOperations;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
+
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -26,7 +32,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @param <D>
  * @param <T>
  */
-public abstract class AService<D extends AModel, T extends ADTO, S extends ADataBaseSequence> {
+public abstract class AService<D extends AModel, T extends ADTO, S extends ADataBaseSequence>
+        implements ISerice<D, T, S> {
 
     public final MongoRepository mongoRepository;
 
@@ -45,12 +52,12 @@ public abstract class AService<D extends AModel, T extends ADTO, S extends AData
         this.s = s;
     }
 
-    public int generateSequence() {
+    public String generateSequence() {
         try {
             ADataBaseSequence counter = this.mongoOperations.findAndModify(query(where("_id").is(this.s.SEQUENCE_NAME)),
                     new Update().inc("seq", 1), options().returnNew(true).upsert(true),
                     s.getClass());
-            return !Objects.isNull(counter) ? counter.getSeq() : 1;
+            return String.valueOf(!Objects.isNull(counter) ? counter.getSeq() : 1);
         } catch (Exception ex) {
             throw new GenericException("Não foi possível concluir a operação");
         }
@@ -63,6 +70,7 @@ public abstract class AService<D extends AModel, T extends ADTO, S extends AData
         return (T) object.create(this.mongoRepository.save(entity));
     }
 
+    @Transactional
     public T insert(D object) {
         this.validationsBeforeInsert((T) t.create(object));
         object.setId(generateSequence());
@@ -127,9 +135,13 @@ public abstract class AService<D extends AModel, T extends ADTO, S extends AData
     }
 
     public List<T> getAll() {
-        return (List<T>) this.mongoRepository.findAll().stream().map(f -> this.t.create(f)).collect(Collectors.toList());
+        Criteria regex = Criteria.where("_id").regex("[0-9]+", "i");
+        List<? extends AModel> criateriaSearch = mongoOperations.find(new Query().addCriteria(regex),d.getClass());
+        List listFilter = criateriaSearch.stream().map(f -> this.t.create(f)).collect(Collectors.toList());
+        return  (List<T>)listFilter;
     }
 
+    @Override
     public abstract void validationsBeforeInsert(T t);
 
     public abstract void validationsBeforeUpdate(T t);

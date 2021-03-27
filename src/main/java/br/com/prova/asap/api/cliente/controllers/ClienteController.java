@@ -6,8 +6,9 @@
 package br.com.prova.asap.api.cliente.controllers;
 
 import br.com.prova.asap.api.cliente.dtos.ClienteDTO;
-import br.com.prova.asap.api.apolice.util.Util;
+import br.com.prova.asap.api.util.Util;
 import br.com.prova.asap.api.cliente.services.ClienteService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.net.URI;
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/v1/cliente")
+@Api(value = "/api/v1/cliente", description = "Operações do Cliente", consumes="application/json")
 public class ClienteController {
 
     @Autowired
@@ -51,7 +53,7 @@ public class ClienteController {
        
         ClienteDTO f = service.insert(cliente);
         
-        URI location = Util.getUri(f.getId(),"id");
+        URI location = Util.getUri(Integer.parseInt(f.getId()),"id");
         return ResponseEntity.created(location).build() ;
 
     }
