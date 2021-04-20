@@ -35,38 +35,9 @@ public class ClienteController  extends AController<ClienteService, ClienteDTO> 
 
     @Autowired
     public ClienteController(ClienteService service, ClienteDTO clienteDTO){
-        super(service, clienteDTO);
+        super(service);
     }
 
-    @ApiOperation(value = "Retorna uma lista de cliente")
-    @Override
-    public ResponseEntity find() {
-        return super.find();
-    }
-    
-    @ApiOperation(value = "Retorna uma lista de cliente por ID")
-    @Override
-    public ResponseEntity findById(@PathVariable Integer id) {
-        return super.findById(id);
-    }
 
-    @ApiOperation(value = "Incluir um novo cliente")
-    @Override
-    public ResponseEntity post(@RequestBody @Valid ClienteDTO cliente) {
-        return super.post(cliente);
-    }
-    
-    @ApiOperation(value = "Alterar um cliente")
-    @Override
-    public ResponseEntity put(@PathVariable Integer id, @Valid @RequestBody ClienteDTO cliente) {
-        return ResponseEntity.ok(service.update(id, cliente));
-    }
-    
-    @ApiOperation(value = "Deletar um cliente")
-    @Override
-    public ResponseEntity remove(@PathVariable Integer id) {
-        return super.remove(id);
-
-    }
 
 }
