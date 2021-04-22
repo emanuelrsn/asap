@@ -1,5 +1,7 @@
-package br.com.prova.asap;
+package br.com.prova.asap.cliente;
 
+import br.com.prova.asap.ProvaAsapLogApplication;
+import br.com.prova.asap.Util.Util;
 import br.com.prova.asap.api.cliente.dtos.ClienteDTO;
 import br.com.prova.asap.api.cliente.services.ClienteService;
 import br.com.prova.asap.api.infra.exception.ObjectNotFoundException;
@@ -8,11 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ProvaAsapLogApplicationTests {
+@SpringBootTest(classes= ProvaAsapLogApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class ClienteTest {
 
 	@Autowired
 	private ClienteService clienteService;
+
+
 	@Test
 	void contextLoads() {
 		ClienteDTO dto = new ClienteDTO();

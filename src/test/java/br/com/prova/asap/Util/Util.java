@@ -1,3 +1,4 @@
+
 package br.com.prova.asap.Util;
 
 import br.com.prova.asap.cliente.DTO.ClienteResponseDTO;
@@ -7,6 +8,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 
@@ -14,8 +17,6 @@ import java.util.List;
 
 @Service
 public class Util {
-
-
 
     @Autowired
     protected TestRestTemplate rest;
@@ -43,3 +44,4 @@ public class Util {
                 });
     }
 }
+
