@@ -35,13 +35,13 @@ public class Util {
                 });
     }
 
-    public ResponseEntity<ClienteResponseDTO> post(String url, HttpEntity dto){
+    public ResponseEntity post(String url, HttpEntity dto,
+                               Class<?> classz){
         return rest.exchange(
                 url,
                 HttpMethod.POST,
                 dto ,
-                new ParameterizedTypeReference<ClienteResponseDTO>() {
-                });
+                classz);
     }
 }
 

@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -47,7 +48,11 @@ public class ClienteApiTest {
         cdto.setCidade("BELEM");
 
         HttpEntity request = new HttpEntity<>(cdto);
-        ResponseEntity response = util.post("/api/v1/cliente", request);
+
+
+
+        ResponseEntity response = util.post("/api/v1/cliente",
+                request, ClienteResponseDTO.class);
 
 
         //ResponseEntity response = rest.postForEntity("/api/v1/cliente",cdto,null);
