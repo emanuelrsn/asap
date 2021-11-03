@@ -1,4 +1,4 @@
-# Prova de Seleção da ASAP LOG
+# API de cadastro de apólices em banco de dados Mongo
 
 
 
@@ -6,43 +6,13 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## Sobre a prova
+##Tecnologias utilizadas
 
-Desafio de desenvolvimento Java<br/>
-Crie uma API para uma seguradora de veículos.<br/>
-Tecnologias que devem ser usadas<br/>
+<br/>
+
 * Java 8
-* Spring Boot ou Grails (utilizando Gradle)
-* MongoDB 3.4 ou superior
-
-Cadastro de clientes (CRUD completo)
-- Deve conter:
-* Nome
-* CPF
-* Cidade
-* UF
-Todos os dados são obrigatórios
-CPF deve ser válido e único
-
-Cadastro de apólices (CRUD completo)
-- Deve conter
-* Número
-* Vigência (início e fim)
-* Placa do veículo
-* Valor
-- Todos os dados são obrigatórios
-- Toda apólice deve pertencer a um cliente
-- O número da apólice deve ser gerado aleatoriamente e único
-
-Consultar apólice por número (endpoint separado)
-* Mostrar todos os dados da apólice
-* Informar em campo se a apólice venceu ou não
-* Informar em campo quantos dias para vencer, ou há quantos dias venceu
-
-Finalização
-* Publicar arquivo JAR para rodar o projeto no GitHub
-* Documentar endpoints com ferramentas como Postman, Swagger,Insomnia, etc.
-* Publicar no GitHub
+* Spring Boot
+* MongoDB 4.4
 
 
 <!-- GETTING STARTED -->
